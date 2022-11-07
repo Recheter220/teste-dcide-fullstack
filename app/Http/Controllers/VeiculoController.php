@@ -147,7 +147,7 @@ class VeiculoController extends Controller
      */
     public function create()
     {
-        //
+        return view('veiculo.formulario');
     }
 
     /**
@@ -156,8 +156,32 @@ class VeiculoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        //
+        $veiculo = Veiculo::find($id);
+        if (!$veiculo) {
+            abort(404, 'Veiculo não encontrado');
+        }
+
+        return view('veiculo.formulario', ['veiculo' => $veiculo]);
+    }
+
+    public function listar()
+    {
+        $veiculos = Veiculo::all();
+        return view('veiculo.lista', ['veiculos' => $veiculos]);
+    }
+
+    public function salvar(Request $request)
+    {
+        if (!empty($request->id)) {
+            $veiculo = Veiculo::find($request->id);
+        }
+
+        if (!$veiculo) {
+            return $this->store($request);
+        }
+
+        return $this->update($request, $veiculo->id);
     }
 }

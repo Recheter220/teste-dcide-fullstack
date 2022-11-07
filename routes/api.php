@@ -15,4 +15,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('/veiculos', VeiculoController::class);
+Route::apiResource('/veiculos', VeiculoController::class);
